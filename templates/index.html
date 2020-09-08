@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>GCP Uploader</title>
+  <style>
+    iframe{
+      border: solid 1px #bdc3c7;
+      border-radius: 3px;
+      height: 300px;
+      overflow: hidden;
+    }
+  </style>
+  
+</head>
+<body>
+
+  <h1>Direct GCP File Uploader</h1>
+  <div id="App"></div>
+
+  <!-- swap out for create-create-app -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/babel">
+    
+    function NewFileUpload() {
+      const [uploads, setUploads] = React.useState([]);
+      return (
+        <div>
+          {uploads.map(x => (
+            <div key={x}>
+              <iframe src="/file_upload" />
+            </div>
+          ))}
+          <button onClick={() => setUploads([...uploads, uploads.length])}>+ Add file</button>
+        </div>
+      );
+    }
+
+    ReactDOM.render(
+      <NewFileUpload />,
+      document.getElementById('App')
+    );
+  </script>
+
+</body>
+</html>

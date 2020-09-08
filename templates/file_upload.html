@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>FileUpload</title>
+  <style>
+    body{
+      margin: 0;
+      text-align: center;
+    }
+    img{      
+      max-height: 300px;
+      max-width: 100%;
+    }
+  </style>
+  
+</head>
+<body>
+
+  <div id="App"></div>
+
+  <!-- swap out for create-create-app -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/babel">
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    function UploadFile() {
+      const [config, setConfig] = React.useState();      
+      React.useEffect(() => {
+        axios.get('/get_upload_url')
+          .then(function (response) {
+            console.log(response.data);
+            setConfig(response.data);
+          });
+      }, []);
+      return (
+        <div>
+          {config &&
+            <form action={config.url} method="POST" encType="multipart/form-data">
+              {Object.keys(config.policy_fields).map(key => 
+                <input
+                  key={key}
+                  name={key}
+                  value={config.policy_fields[key]}
+                  type="hidden"
+                />
+              )}
+              <p><input type="file" name="file"/></p>
+              <p><input type="submit" value="Upload" /></p>
+            </form>
+          }
+        </div>
+      );
+    }
+
+    function DisplayFile() {
+      const bucket = urlParams.get('bucket');
+      const fileName = urlParams.get('key');
+      return (
+        <img src={`https://storage.googleapis.com/${bucket}/${fileName}`} />
+      )
+    }
+    
+    ReactDOM.render(
+      urlParams.has('etag') ? <DisplayFile /> : <UploadFile />,
+      document.getElementById('App')
+    );
+  </script>
+
+</body>
+</html>
