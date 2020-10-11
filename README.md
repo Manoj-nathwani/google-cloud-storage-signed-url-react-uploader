@@ -9,7 +9,7 @@
 - The catch is that the only domain which supports CORS is `<my-bucket>.storage.googleapis.com` as it uses [Cross-origin resource sharing](https://cloud.google.com/storage/docs/cross-origin) settings, so if you want to upload files via a browser it isn't possible.
 
 ## The solution
-- [Generate a signed POST](https://cloud.google.com/storage/docs/xml-api/post-object#python) which allows you to use it in a HTML form which also has this awesome `success_action_redirect` settubg which we can use to redirect back to our app once completed.
+- [Generate a signed POST](https://cloud.google.com/storage/docs/xml-api/post-object#python) which allows you to use it in a HTML form which also has this awesome `success_action_redirect` setting which we can use to redirect back to our app once completed.
 - The above along with some fairly simple iframe and react work allows you to fully create a react element which allows you to upload multiple files one-by-one and have them display on the page once completed.
 - Obviously you'll have to add authentication EVERYWHERE as this is a super minimal example
 
